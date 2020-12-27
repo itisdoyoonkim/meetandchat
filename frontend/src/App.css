@@ -1,0 +1,9 @@
+@import "~antd/dist/antd.css";
+
+body {
+  background-color: rgb(25, 25, 31);
+}
+
+.container {
+  padding: 20px;
+}
