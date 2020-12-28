@@ -66,7 +66,7 @@ function ChatCard({ chat }) {
       <section>
         <TagsOutlined />{" "}
         {chat.tags.map((tag) => {
-          return <span>{tag} </span>;
+          return <span key={tag + Math.random()}>{tag} </span>;
         })}
       </section>
 

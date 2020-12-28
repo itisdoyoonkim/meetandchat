@@ -12,6 +12,7 @@ import "./App.css";
 function App() {
   const [openChatList, setOpenChatList] = useState([]);
   const [tags, setTags] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
 
   useEffect(() => {
     async function fetchOpenChatList() {
@@ -29,8 +30,6 @@ function App() {
           })
         );
       }
-      // console.log("raw:", tagsArray);
-      // console.log("duplicateRemoved:", [...new Set(tagsArray)]);
       let duplicateRemovedTagsArray = [...new Set(tagsArray)];
 
       setTags([...duplicateRemovedTagsArray]);
@@ -41,11 +40,15 @@ function App() {
     return () => {};
   }, []);
 
+  function filterList(selectedTag) {
+    console.log(selectedTag);
+  }
+
   return (
     <>
       <div className="container">
         <Header />
-        <FilterBar tags={tags} />
+        <FilterBar tags={tags} filterList={(tag) => filterList(tag)} />
 
         <Advertisement />
 

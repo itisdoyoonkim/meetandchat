@@ -1,13 +1,13 @@
 import React from "react";
-import { Select } from "antd";
+import { Select, Button } from "antd";
 import { TagsOutlined } from "@ant-design/icons";
 
-function FilterBar({ tags }) {
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
+function FilterBar({ tags, filterList }) {
+  // const [selectedTag, setSelectedTag] = useState("");
 
-  console.log("From FilterBar:", tags);
+  function handleChange(selectedTag) {
+    filterList(selectedTag);
+  }
 
   const { Option } = Select;
 
@@ -15,8 +15,7 @@ function FilterBar({ tags }) {
 
   return (
     <section>
-      <Select
-        // mode="tags"
+      {/* <Select
         style={{ width: "100%" }}
         placeholder={placeholder}
         onChange={handleChange}
@@ -25,12 +24,15 @@ function FilterBar({ tags }) {
       >
         {tags.sort().map((option) => {
           return (
-            <Option value={option} label={option}>
+            <Option value={option} label={option} key={option + Math.random()}>
               <div className="demo-option-label-item">{option}</div>
             </Option>
           );
         })}
-      </Select>
+      </Select> */}
+      {/* {tags.sort().map((tag) => {
+        return <Button style={{ marginRight: "2px" }}>{tag}</Button>;
+      })} */}
     </section>
   );
 }

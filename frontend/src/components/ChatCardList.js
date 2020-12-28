@@ -9,7 +9,7 @@ function ChatCardList({ list }) {
       {list.map((chat) => {
         return (
           <Col
-            key={chat.openLink}
+            key={chat.openlink}
             xs={24}
             sm={24}
             md={12}
