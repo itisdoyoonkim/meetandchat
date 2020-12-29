@@ -3,7 +3,6 @@ import React from "react";
 function Header() {
   return (
     <>
-      <h2 style={textStyle}>HANVANDO</h2>
       <h3 style={textStyle}>
         kakaotalk<strong>openchat</strong> - 벤쿠버/밴쿠버
       </h3>

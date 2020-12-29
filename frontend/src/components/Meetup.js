@@ -9,7 +9,7 @@ function Meetup() {
 
   useEffect(() => {
     async function fetchPosts() {
-      const res = await axios.get("/meetup", {
+      const res = await axios.get("/meetups", {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
 
