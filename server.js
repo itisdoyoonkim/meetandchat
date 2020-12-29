@@ -14,15 +14,6 @@ app.use(express.json({ extended: false }));
 
 app.use("/meetups", require("./routes/post"));
 
-if (process.env.NODE_ENV === "production") {
-  console.log("in production");
-  app.use(express.static(path.join(__dirname, "frontend/build")));
-
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
-  });
-}
-
 app.get("/getLinks", (req, res) => {
   const API =
     "https://api.develope.kr/search/room/list?query=%EB%B2%A4%EC%BF%A0%EB%B2%84&type=m&page=1&count=100";
@@ -41,6 +32,15 @@ app.get("/getLinks", (req, res) => {
       res.send(err);
     });
 });
+
+if (process.env.NODE_ENV === "production") {
+  console.log("in production");
+  app.use(express.static(path.join(__dirname, "frontend/build")));
+
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "frontend/build", "index.html"));
+  });
+}
 
 app.listen(port, () =>
   console.log(`Server running on http://localhost:${port}`)
