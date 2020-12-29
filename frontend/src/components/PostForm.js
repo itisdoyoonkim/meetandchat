@@ -23,7 +23,7 @@ function PostForm(props) {
     };
     const body = JSON.stringify(formData);
 
-    await axios.post("/meetup", body, config);
+    await axios.post("/meetups", body, config);
 
     props.history.push("/meetup");
   };
