@@ -5,10 +5,14 @@ const path = require("path");
 const axios = require("axios");
 const port = process.env.PORT || 5000;
 const fs = require("fs");
+const connectToDB = require("./db");
+
+connectToDB();
 
 app.use(cors());
+app.use(express.json({ extended: false }));
 
-console.log(path.join(__dirname, "frontend/build"));
+app.use("/meetup", require("./routes/post"));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "frontend/build")));
@@ -36,8 +40,6 @@ app.get("/getLinks", (req, res) => {
       res.send(err);
     });
 });
-
-app.get("/search/:keyword", (req, res) => {});
 
 app.listen(port, () =>
   console.log(`Server running on http://localhost:${port}`)

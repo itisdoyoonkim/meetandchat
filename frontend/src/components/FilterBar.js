@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Select, Button } from "antd";
-import { TagsOutlined } from "@ant-design/icons";
+import {
+  TagsOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+} from "@ant-design/icons";
 
 function FilterBar({ tags, filterList }) {
-  // const [selectedTag, setSelectedTag] = useState("");
+  const [viewTags, setViewTags] = useState(false);
+  const [selectedTag, setSelectedTag] = useState("");
+
+  // console.log(tags);
 
   function handleChange(selectedTag) {
     filterList(selectedTag);
@@ -11,29 +18,51 @@ function FilterBar({ tags, filterList }) {
 
   const { Option } = Select;
 
-  const placeholder = <TagsOutlined />;
+  const placeholder = (
+    <>
+      <TagsOutlined /> 태그를 선택해주세요
+    </>
+  );
 
   return (
-    <section>
-      {/* <Select
-        style={{ width: "100%" }}
-        placeholder={placeholder}
-        onChange={handleChange}
-        optionLabelProp="label"
-        autoFocus
-      >
-        {tags.sort().map((option) => {
-          return (
-            <Option value={option} label={option} key={option + Math.random()}>
-              <div className="demo-option-label-item">{option}</div>
-            </Option>
-          );
-        })}
-      </Select> */}
-      {/* {tags.sort().map((tag) => {
-        return <Button style={{ marginRight: "2px" }}>{tag}</Button>;
-      })} */}
-    </section>
+    <div style={{ margin: "5px 0" }}>
+      <section>
+        <Select
+          style={{ width: "100%" }}
+          placeholder={placeholder}
+          onChange={handleChange}
+          optionLabelProp="label"
+          autoFocus
+        >
+          {tags[0]
+            ? tags[0].sort().map((option) => {
+                return (
+                  <Option
+                    value={option}
+                    label={option}
+                    key={option + Math.random()}
+                  >
+                    <div className="demo-option-label-item">{option}</div>
+                  </Option>
+                );
+              })
+            : null}
+        </Select>
+      </section>
+      {/* <Button onClick={() => setViewTags(!viewTags)}>
+        {viewTags
+          ? ["Hide all tags", <EyeInvisibleOutlined />]
+          : ["See all tags", <EyeOutlined />]}
+      </Button>
+
+      {viewTags ? (
+        <section style={{ margin: "10px 0" }}>
+          {tags[0].sort().map((tag) => {
+            return <Button style={{ margin: "1px" }}>{tag}</Button>;
+          })}
+        </section>
+      ) : null} */}
+    </div>
   );
 }
 
