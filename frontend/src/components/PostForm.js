@@ -62,7 +62,7 @@ function PostForm(props) {
             onChange={(e) => handleChange(e)}
           />
         </Form.Item>
-        <Form.Item label="오픈채팅 링크" name="link">
+        <Form.Item label="오픈 챗 링크" name="link">
           <Input
             placeholder="https://open.kakao.com/o/..."
             name="link"
@@ -76,24 +76,6 @@ function PostForm(props) {
           </Button>
         </Form.Item>
       </Form>
-
-      {/* <form onSubmit={handleSubmit}>
-        <label>Title</label>
-        <input
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={(e) => handleChange(e)}
-        />
-        <label>Description</label>
-        <input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={(e) => handleChange(e)}
-        />
-        <button type="submit">Post</button>
-      </form> */}
     </Card>
   );
 }

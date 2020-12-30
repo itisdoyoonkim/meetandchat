@@ -2,6 +2,7 @@ import React from "react";
 import { Divider, Card, Button } from "antd";
 import {
   HeartFilled,
+  HeartOutlined,
   TeamOutlined,
   TagsOutlined,
   CommentOutlined,
