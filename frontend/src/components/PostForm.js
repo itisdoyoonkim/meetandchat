@@ -11,7 +11,13 @@ function PostForm(props) {
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      title: e.target.value,
+      description: e.target.value.split(/\r?\n/),
+      link: e.target.value,
+      // [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -54,8 +60,9 @@ function PostForm(props) {
             onChange={(e) => handleChange(e)}
           />
         </Form.Item>
-        <Form.Item label="내용" name="description">
-          <Input
+        <Form.Item label="한 줄 내용" name="description">
+          <Input.TextArea
+            rows={10}
             placeholder=""
             name="description"
             value={formData.description}

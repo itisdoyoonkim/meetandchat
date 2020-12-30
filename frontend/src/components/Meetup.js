@@ -6,6 +6,7 @@ import axios from "axios";
 
 function Meetup() {
   const [posts, setPosts] = useState([]);
+  const [showPost, setShowPost] = useState(false);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -28,6 +29,48 @@ function Meetup() {
     return `${localDateTime}`;
   };
 
+  const onShowPost = () => {
+    console.log(showPost);
+    setShowPost(!showPost);
+  };
+
+  const postDetail = (post) => {
+    console.log("aaa");
+    return (
+      <>
+        {post.description.map((sentence) => {
+          return <p style={textStyle}>{sentence}</p>;
+        })}
+        <section>
+          <a
+            aria-label="Link to enter chat room"
+            href={post.link}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <br />
+            {post.link ? (
+              <Button>
+                <CommentOutlined /> 입장
+              </Button>
+            ) : null}
+          </a>
+        </section>
+        <small>
+          {post.link ? (
+            <>
+              <WarningOutlined /> 링크 미리보기:{" "}
+              {post.link.split("").slice(0, 35)}
+              ...
+            </>
+          ) : (
+            "개설한 대화방이 없습니다"
+          )}
+        </small>
+      </>
+    );
+  };
+
   return (
     <div>
       <Row gutter={16}>
@@ -44,7 +87,13 @@ function Meetup() {
                   style={{ margin: "10px 0" }}
                 >
                   <Card title={post.title}>
-                    <p>{post.description}</p>
+                    <Button onClick={onShowPost}>Reveal</Button>
+
+                    {showPost ? postDetail(post) : null}
+
+                    {/* {post.description.map((sentence) => {
+                      return <p style={textStyle}>{sentence}</p>;
+                    })}
                     <section>
                       <a
                         aria-label="Link to enter chat room"
@@ -70,7 +119,7 @@ function Meetup() {
                       ) : (
                         "개설한 대화방이 없습니다"
                       )}
-                    </small>
+                    </small> */}
                     <Divider orientation="right" plain>
                       <section>{test(post.date)}</section>
                     </Divider>
@@ -83,5 +132,9 @@ function Meetup() {
     </div>
   );
 }
+
+const textStyle = {
+  overflowWrap: "break-word" /* CSS3 */,
+};
 
 export default Meetup;

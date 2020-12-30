@@ -3,9 +3,7 @@ const PostSchema = new mongoose.Schema({
   title: {
     type: String,
   },
-  description: {
-    type: String,
-  },
+  description: [],
   link: {
     type: String,
   },

@@ -1,6 +1,5 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import ReactGA from "react-ga";
 
 import Header from "./components/Header";
 // import Advertisement from "./components/Advertisement";
@@ -11,6 +10,9 @@ import Meetup from "./components/Meetup";
 import NewMeetup from "./components/NewMeetup";
 
 import "./App.css";
+
+ReactGA.initialize(process.env.GA_ID);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App(props) {
   // const [openChatList, setOpenChatList] = useState([]);
