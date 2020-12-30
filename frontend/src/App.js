@@ -11,8 +11,7 @@ import NewMeetup from "./components/NewMeetup";
 
 import "./App.css";
 
-const GA_ID = process.env.GA_ID;
-
+const GA_ID = process.env.REACT_APP_GA_ID;
 ReactGA.initialize(GA_ID, { debug: true });
 ReactGA.pageview(window.location.pathname + window.location.search);
 
