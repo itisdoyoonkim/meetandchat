@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ReactGA from "react-ga";
+import { Affix } from "antd";
 
 import Header from "./components/Header";
 // import Advertisement from "./components/Advertisement";
@@ -52,7 +53,9 @@ function App(props) {
     <BrowserRouter>
       <div className="container">
         <Header />
-        <MenuBar />
+        <Affix offsetTop={0}>
+          <MenuBar />
+        </Affix>
         {/* <Advertisement /> */}
 
         <Switch>

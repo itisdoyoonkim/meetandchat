@@ -14,6 +14,7 @@ function ChatCard({ chat }) {
 
   return (
     <Card
+      bordered={false}
       style={{
         backgroundColor: "#fefefa",
       }}

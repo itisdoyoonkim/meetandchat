@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Select, Button } from "antd";
 import { TagsOutlined } from "@ant-design/icons";
 
-function FilterBar({ tags, filterList }) {
+function FilterBar({ tags, filterList, selectedTagValue }) {
   function handleChange(selectedTag) {
     filterList(selectedTag);
   }
@@ -16,44 +16,29 @@ function FilterBar({ tags, filterList }) {
   );
 
   return (
-    <div style={{ margin: "5px 0" }}>
-      <section>
-        <Select
-          style={{ width: "100%" }}
-          placeholder={placeholder}
-          onChange={handleChange}
-          optionLabelProp="label"
-          autoFocus
-        >
-          {tags[0]
-            ? tags[0].sort().map((option) => {
-                return (
-                  <Option
-                    value={option}
-                    label={option}
-                    key={option + Math.random()}
-                  >
-                    <div className="demo-option-label-item">{option}</div>
-                  </Option>
-                );
-              })
-            : null}
-        </Select>
-      </section>
-      {/* <Button onClick={() => setViewTags(!viewTags)}>
-        {viewTags
-          ? ["Hide all tags", <EyeInvisibleOutlined />]
-          : ["See all tags", <EyeOutlined />]}
-      </Button>
-
-      {viewTags ? (
-        <section style={{ margin: "10px 0" }}>
-          {tags[0].sort().map((tag) => {
-            return <Button style={{ margin: "1px" }}>{tag}</Button>;
-          })}
-        </section>
-      ) : null} */}
-    </div>
+    <section style={{ margin: "5px 0" }}>
+      <Select
+        style={{ width: "100%" }}
+        placeholder={placeholder}
+        onChange={handleChange}
+        optionLabelProp="label"
+        value={selectedTagValue ? selectedTagValue : placeholder}
+      >
+        {tags[0]
+          ? tags[0].sort().map((option) => {
+              return (
+                <Option
+                  value={option}
+                  label={option}
+                  key={option + Math.random()}
+                >
+                  <div className="demo-option-label-item">{option}</div>
+                </Option>
+              );
+            })
+          : null}
+      </Select>
+    </section>
   );
 }
 

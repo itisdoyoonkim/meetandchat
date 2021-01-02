@@ -28,7 +28,6 @@ function Meetup() {
   };
 
   const postDetail = (post) => {
-    console.log("aaa");
     return (
       <>
         {post.description.map((sentence) => {
@@ -80,7 +79,13 @@ function Meetup() {
                   xl={6}
                   style={{ margin: "10px 0" }}
                 >
-                  <Card loading={!post ? true : false}>
+                  <Card
+                    loading={!post ? true : false}
+                    bordered={false}
+                    style={{
+                      backgroundColor: "#fefefa",
+                    }}
+                  >
                     <section>
                       <h4>{post.title}</h4>
                     </section>
