@@ -4,34 +4,40 @@ import { withRouter } from "react-router-dom";
 import { Card, Row, Col, Form, Input, Button } from "antd";
 
 function PostForm(props) {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    link: "",
-  });
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [link, setLink] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      title: e.target.value,
-      description: e.target.value.split(/\r?\n/),
-      link: e.target.value,
-      // [e.target.name]: e.target.value,
-    });
+  const [errors, setErrors] = useState([]);
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+  const handleDescriptionChange = (e) => {
+    setDescription(e.target.value.split(/\r?\n/));
+  };
+  const handleLinkChange = (e) => {
+    setLink(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
-    // console.log(formData);
 
     const config = {
       headers: { "Content-type": "application/json" },
     };
-    const body = JSON.stringify(formData);
+    const body = JSON.stringify({ title, description, link });
 
-    await axios.post("/meetups", body, config);
-
-    props.history.push("/meetup");
+    try {
+      await axios.post("/meetups", body, config);
+      props.history.push("/meetup");
+    } catch (error) {
+      setErrors([...errors, ...error.response.data.errors]);
+      setTimeout(() => {
+        setErrors([]);
+      }, 3000);
+      console.log(error.response.data.errors);
+    }
   };
 
   const [form] = Form.useForm();
@@ -41,6 +47,11 @@ function PostForm(props) {
 
   return (
     <Card style={{ marginTop: "10px" }}>
+      {errors
+        ? errors.map((e) => {
+            return <h5>{e.msg}</h5>;
+          })
+        : null}
       <Form
         {...formItemLayout}
         layout="horizontal"
@@ -56,25 +67,25 @@ function PostForm(props) {
             placeholder=""
             autoFocus
             name="title"
-            value={formData.title}
-            onChange={(e) => handleChange(e)}
+            value={title}
+            onChange={(e) => handleTitleChange(e)}
           />
         </Form.Item>
-        <Form.Item label="한 줄 내용" name="description">
+        <Form.Item label="내용 (1-100자)" name="description">
           <Input.TextArea
-            rows={10}
+            rows={3}
             placeholder=""
             name="description"
-            value={formData.description}
-            onChange={(e) => handleChange(e)}
+            value={description}
+            onChange={(e) => handleDescriptionChange(e)}
           />
         </Form.Item>
         <Form.Item label="오픈 챗 링크" name="link">
           <Input
             placeholder="https://open.kakao.com/o/..."
             name="link"
-            value={formData.link}
-            onChange={(e) => handleChange(e)}
+            value={link}
+            onChange={(e) => handleLinkChange(e)}
           />
         </Form.Item>
         <Form.Item {...buttonItemLayout}>

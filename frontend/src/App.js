@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-// import ReactGA from "react-ga";
+import ReactGA from "react-ga";
 
 import Header from "./components/Header";
 // import Advertisement from "./components/Advertisement";
@@ -11,9 +11,9 @@ import NewMeetup from "./components/NewMeetup";
 
 import "./App.css";
 
-// const GA_ID = process.env.REACT_APP_GA_ID;
-// ReactGA.initialize(GA_ID, { debug: true });
-// ReactGA.pageview(window.location.pathname + window.location.search);
+const GA_ID = process.env.REACT_APP_GA_ID;
+ReactGA.initialize(GA_ID);
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 function App(props) {
   // const [openChatList, setOpenChatList] = useState([]);

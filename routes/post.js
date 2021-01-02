@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
+const { check, validationResult } = require("express-validator");
 
 router.get("/", async (req, res) => {
   try {
@@ -33,23 +34,41 @@ router.get("/:post_id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
-  const { title, description, link } = req.body;
+router.post(
+  "/",
+  [
+    check("title", "제목을 입력 해주세요.").not().isEmpty(),
+    check("description", "내용이 너무 짧거나 너무 길어요.").isArray({
+      min: 1,
+      max: 4,
+    }),
+    check("link", "오픈채팅 혹은 일대일 링크를 입력 해주세요.").not().isEmpty(),
+  ],
+  async (req, res) => {
+    const { title, description, link } = req.body;
 
-  try {
-    post = new Post({
-      title,
-      description,
-      link,
-    });
+    console.log(req.body);
+    const errors = validationResult(req);
 
-    const savedPost = await post.save();
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
 
-    return res.status(200).json({ savedPost });
-  } catch (error) {
-    console.error(error.message);
-    return res.status(500).json({ msg: "Server error." });
+    try {
+      post = new Post({
+        title,
+        description,
+        link,
+      });
+
+      const savedPost = await post.save();
+
+      return res.status(200).json({ savedPost });
+    } catch (error) {
+      console.error(error.message);
+      return res.status(500).json({ msg: "Server error." });
+    }
   }
-});
+);
 
 module.exports = router;

@@ -13,6 +13,7 @@ app.use(cors());
 app.use(express.json({ extended: false }));
 
 app.use("/meetups", require("./routes/post"));
+// app.use("/auth", require("./routes/auth"));
 
 app.get("/getLinks", (req, res) => {
   const API =
@@ -21,9 +22,13 @@ app.get("/getLinks", (req, res) => {
   axios(API)
     .then((response) => {
       // console.log(response.data);
-      fs.writeFile("res.json", JSON.stringify(response.data), function (err) {
-        console.log(err);
-      });
+      fs.writeFile(
+        path.resolve(`./frontend/src/res.json`),
+        JSON.stringify(response.data),
+        function (err) {
+          console.log(err);
+        }
+      );
 
       return res.json(response.data);
     })
@@ -42,7 +47,6 @@ if (process.env.NODE_ENV === "production") {
     }
   });
 
-  console.log("in production");
   app.use(express.static(path.join(__dirname, "frontend/build")));
 
   app.get("/*", (req, res) => {

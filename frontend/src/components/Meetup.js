@@ -6,7 +6,7 @@ import axios from "axios";
 
 function Meetup() {
   const [posts, setPosts] = useState([]);
-  const [showPost, setShowPost] = useState(false);
+  // const [showPost, setShowPost] = useState(false);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -24,15 +24,15 @@ function Meetup() {
   // console.log(new Date("2020-12-28T06:30:09.743Z"));
   // console.log(posts);
 
-  const test = (date) => {
-    const localDateTime = new Date(date).toLocaleString();
+  const changeDateFormat = (date) => {
+    const localDateTime = new Date(date).toLocaleString("ko-KR");
     return `${localDateTime}`;
   };
 
-  const onShowPost = () => {
-    console.log(showPost);
-    setShowPost(!showPost);
-  };
+  // const onShowPost = () => {
+  //   console.log(showPost);
+  //   setShowPost(!showPost);
+  // };
 
   const postDetail = (post) => {
     console.log("aaa");
@@ -87,10 +87,7 @@ function Meetup() {
                   style={{ margin: "10px 0" }}
                 >
                   <Card title={post.title}>
-                    <Button onClick={onShowPost}>Reveal</Button>
-
-                    {showPost ? postDetail(post) : null}
-
+                    {postDetail(post)}
                     {/* {post.description.map((sentence) => {
                       return <p style={textStyle}>{sentence}</p>;
                     })}
@@ -121,7 +118,7 @@ function Meetup() {
                       )}
                     </small> */}
                     <Divider orientation="right" plain>
-                      <section>{test(post.date)}</section>
+                      <section>{changeDateFormat(post.date)}</section>
                     </Divider>
                   </Card>
                 </Col>
