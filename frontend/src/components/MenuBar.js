@@ -3,21 +3,14 @@ import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import {
   CommentOutlined,
-  PlusOutlined,
   MessageOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
 
 function MenuBar() {
-  const { SubMenu } = Menu;
-
   return (
     <>
-      <Menu
-        // onClick={this.handleClick}
-        // selectedKeys={[current]}
-        mode="horizontal"
-      >
+      <Menu mode="horizontal">
         <Menu.Item key="open-chat" icon={<CommentOutlined />}>
           <Link to="/">오픈 챗</Link>
         </Menu.Item>

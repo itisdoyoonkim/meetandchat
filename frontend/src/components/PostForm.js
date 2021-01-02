@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Card, Row, Col, Alert, Form, Input, Button, Space } from "antd";
+import { Card, Form, Input, Button } from "antd";
 
 function PostForm(props) {
   const [title, setTitle] = useState("");
@@ -46,9 +46,6 @@ function PostForm(props) {
   const buttonItemLayout = { wrapperCol: { span: 14, offset: 4 } };
 
   const displayError = (fieldName) => {
-    // return errors.map((error) => {
-    //   return error.param === fieldName ? error.msg : null;
-    // });
     for (let i = 0; i < errors.length; i++) {
       if (errors[i].param === fieldName) {
         return errors[i].msg;

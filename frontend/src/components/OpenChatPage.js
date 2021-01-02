@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Skeleton, Button, Affix, Spin } from "antd";
+import { Affix, Spin } from "antd";
 
 // import data from "../res.json";
 
@@ -70,8 +70,6 @@ function OpenChatPage() {
       return each.tags.includes(selectedTag);
     });
   }
-
-  // console.log("data from json: ", data.result.lists);
 
   const Spinner = () => {
     return (

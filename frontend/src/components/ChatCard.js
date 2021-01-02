@@ -11,7 +11,6 @@ import {
 
 function ChatCard({ chat }) {
   // console.log(chat.lastchat.toLocaleString());
-  const { Meta } = Card;
 
   return (
     <Card

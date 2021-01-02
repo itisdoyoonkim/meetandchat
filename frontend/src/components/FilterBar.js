@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 import { Select, Button } from "antd";
-import {
-  TagsOutlined,
-  EyeOutlined,
-  EyeInvisibleOutlined,
-} from "@ant-design/icons";
+import { TagsOutlined } from "@ant-design/icons";
 
 function FilterBar({ tags, filterList }) {
-  const [viewTags, setViewTags] = useState(false);
-  const [selectedTag, setSelectedTag] = useState("");
-
-  // console.log(tags);
-
   function handleChange(selectedTag) {
     filterList(selectedTag);
   }
