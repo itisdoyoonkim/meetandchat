@@ -20,27 +20,12 @@ function ChatCard({ chat }) {
       }}
     >
       <section>
-        {/* <img
-          src={chat.wp}
-          alt="room-img"
-          style={{
-            // borderRadius: "99px",
-            marginBottom: "10px",
-            width: "100%",
-            height: "60%",
-            // position: "absolute",
-            // top: "10px",
-            // right: "10px",
-          }}
-        /> */}
-        <Meta
-          title={
-            chat.locked
-              ? [<LockOutlined style={{ color: "blue" }} />, " ", chat.name]
-              : chat.name
-          }
-          description={"- " + chat.owner}
-        />
+        <h4>
+          {chat.locked
+            ? [<LockOutlined style={{ color: "blue" }} />, " ", chat.name]
+            : chat.name}
+        </h4>
+        <h5>{"- " + chat.owner}</h5>
       </section>
 
       <section>

@@ -42,7 +42,9 @@ router.post(
       min: 1,
       max: 4,
     }),
-    check("link", "오픈채팅 혹은 일대일 링크를 입력 해주세요.").not().isEmpty(),
+    check("link", "오픈 챗 혹은 일대일 챗 링크를 입력 해주세요.")
+      .not()
+      .isEmpty(),
   ],
   async (req, res) => {
     const { title, description, link } = req.body;

@@ -6,7 +6,6 @@ import axios from "axios";
 
 function Meetup() {
   const [posts, setPosts] = useState([]);
-  // const [showPost, setShowPost] = useState(false);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -14,7 +13,6 @@ function Meetup() {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
 
-      // console.log("data:", res.data);
       setPosts(res.data);
     }
     fetchPosts();
@@ -28,11 +26,6 @@ function Meetup() {
     const localDateTime = new Date(date).toLocaleString("ko-KR");
     return `${localDateTime}`;
   };
-
-  // const onShowPost = () => {
-  //   console.log(showPost);
-  //   setShowPost(!showPost);
-  // };
 
   const postDetail = (post) => {
     console.log("aaa");
@@ -59,6 +52,7 @@ function Meetup() {
         <small>
           {post.link ? (
             <>
+              <h4>링크 미리보기를 참고하시고 위험한 링크로 부터 보호하세요.</h4>
               <WarningOutlined /> 링크 미리보기:{" "}
               {post.link.split("").slice(0, 35)}
               ...
@@ -86,37 +80,14 @@ function Meetup() {
                   xl={6}
                   style={{ margin: "10px 0" }}
                 >
-                  <Card title={post.title}>
-                    {postDetail(post)}
-                    {/* {post.description.map((sentence) => {
-                      return <p style={textStyle}>{sentence}</p>;
-                    })}
+                  <Card loading={!post ? true : false}>
                     <section>
-                      <a
-                        aria-label="Link to enter chat room"
-                        href={post.link}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <br />
-                        {post.link ? (
-                          <Button>
-                            <CommentOutlined /> 입장
-                          </Button>
-                        ) : null}
-                      </a>
+                      <h4>{post.title}</h4>
                     </section>
-                    <small>
-                      {post.link ? (
-                        <>
-                          <WarningOutlined /> 링크 미리보기:{" "}
-                          {post.link.split("").slice(0, 35)}
-                          ...
-                        </>
-                      ) : (
-                        "개설한 대화방이 없습니다"
-                      )}
-                    </small> */}
+
+                    <Divider />
+
+                    {postDetail(post)}
                     <Divider orientation="right" plain>
                       <section>{changeDateFormat(post.date)}</section>
                     </Divider>

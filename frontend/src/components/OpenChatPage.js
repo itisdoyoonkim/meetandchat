@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Skeleton, Button, Affix } from "antd";
+import { Skeleton, Button, Affix, Spin } from "antd";
 
 // import data from "../res.json";
 
@@ -73,6 +73,14 @@ function OpenChatPage() {
 
   // console.log("data from json: ", data.result.lists);
 
+  const Spinner = () => {
+    return (
+      <div style={{ textAlign: "center", padding: "50px" }}>
+        <Spin size="large" />
+      </div>
+    );
+  };
+
   return (
     <>
       <Affix offsetTop={0}>
@@ -83,7 +91,7 @@ function OpenChatPage() {
           list={selectedTag ? searchMatchingChat(openChatList) : openChatList}
         />
       ) : (
-        <Skeleton active />
+        <Spinner />
       )}
     </>
   );
