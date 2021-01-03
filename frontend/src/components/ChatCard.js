@@ -10,7 +10,8 @@ import {
 } from "@ant-design/icons";
 
 function ChatCard({ chat }) {
-  // console.log(chat.lastchat.toLocaleString());
+  console.log(chat.lastchat);
+  const localTime = new Date(chat.lastchat).getTime();
 
   return (
     <Card
@@ -58,7 +59,7 @@ function ChatCard({ chat }) {
 
       <section>
         {/* Add 7 hours to display Vancouver time */}
-        <small>최근 메세지: {chat.lastchat}</small>
+        {/* <small>최근 메세지: {chat.lastchat}</small> */}
       </section>
     </Card>
   );

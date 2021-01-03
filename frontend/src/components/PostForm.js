@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Card, Form, Input, Button } from "antd";
+import { Card, Divider, Form, Input, Button } from "antd";
+import {
+  CommentOutlined,
+  WarningOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+} from "@ant-design/icons";
 
 function PostForm(props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
 
   const [errors, setErrors] = useState([]);
 
@@ -42,9 +49,6 @@ function PostForm(props) {
 
   const [form] = Form.useForm();
 
-  const formItemLayout = { labelCol: { span: 4 }, wrapperCol: { span: 14 } };
-  const buttonItemLayout = { wrapperCol: { span: 14, offset: 4 } };
-
   const displayError = (fieldName) => {
     for (let i = 0; i < errors.length; i++) {
       if (errors[i].param === fieldName) {
@@ -53,12 +57,70 @@ function PostForm(props) {
     }
   };
 
+  useEffect(() => {
+    console.log("toggle preview");
+    const el = document.getElementById("form-card");
+    window.scrollTo({
+      top: el.offsetHeight,
+      behavior: "smooth",
+    });
+
+    return () => {
+      // cleanup
+    };
+  }, [showPreview]);
+
+  const DisplayPreview = () => {
+    return (
+      <section style={{ marginTop: "7px" }}>
+        <Card
+          bordered={false}
+          style={{
+            backgroundColor: "#fefefa",
+          }}
+        >
+          <section>
+            <h4>{title}</h4>
+          </section>
+
+          <Divider />
+
+          <section>
+            {description
+              ? description.map((sentence) => {
+                  return (
+                    <p style={{ overflowWrap: "break-word" }}>{sentence}</p>
+                  );
+                })
+              : null}
+
+            <a
+              aria-label="Link to enter chat room"
+              href={link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <br />
+              <Button>
+                <CommentOutlined /> 입장
+              </Button>
+            </a>
+          </section>
+          <small>
+            <h4>링크 미리보기를 참고하시고 수상한 링크는 누르지 마세요.</h4>
+            <WarningOutlined /> 링크 미리보기: {link.split("").slice(0, 35)}
+            ...
+          </small>
+        </Card>
+      </section>
+    );
+  };
+
   return (
     <>
-      <Card style={{ marginTop: "10px" }}>
+      <Card style={{ marginTop: "10px" }} id="form-card">
         <Form
-          {...formItemLayout}
-          layout="horizontal"
+          layout="vertical"
           form={form}
           initialValues={{
             layout: "horizontal",
@@ -93,13 +155,21 @@ function PostForm(props) {
             />
             <h5>예시) https://open.kakao.com/o/...</h5>
           </Form.Item>
-          <Form.Item {...buttonItemLayout}>
-            <Button type="primady" htmlType="submit">
-              작성
+          <Form.Item>
+            <Button type="primary" onClick={() => setShowPreview(!showPreview)}>
+              미리보기
+              {!showPreview ? <EyeOutlined /> : <EyeInvisibleOutlined />}
             </Button>
           </Form.Item>
+
+          {showPreview ? (
+            <Form.Item>
+              <Button htmlType="submit">작성</Button>
+            </Form.Item>
+          ) : null}
         </Form>
       </Card>
+      {showPreview ? <DisplayPreview /> : null}
     </>
   );
 }
