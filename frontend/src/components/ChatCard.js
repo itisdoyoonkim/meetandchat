@@ -10,8 +10,8 @@ import {
 } from "@ant-design/icons";
 
 function ChatCard({ chat }) {
-  console.log(chat.lastchat);
-  const localTime = new Date(chat.lastchat).getTime();
+  // console.log(chat.lastchat);
+  // const localTime = new Date(chat.lastchat).getTime();
 
   return (
     <Card
@@ -26,21 +26,29 @@ function ChatCard({ chat }) {
             ? [<LockOutlined style={{ color: "blue" }} />, " ", chat.name]
             : chat.name}
         </h4>
-        <h5>{"- " + chat.owner}</h5>
-      </section>
-
-      <section>
-        <a
-          aria-label="Link to enter chat room"
-          href={chat.openlink}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <br />
-          <Button>
-            <CommentOutlined /> 입장
-          </Button>
-        </a>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <section>
+            <h5>{"- " + chat.owner}</h5>
+            <a
+              aria-label="Link to enter chat room"
+              href={chat.openlink}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <br />
+              <Button>
+                <CommentOutlined /> 입장
+              </Button>
+            </a>
+          </section>
+          <section>
+            <img
+              src={chat.pfimg}
+              style={{ width: "80px", borderRadius: "99px" }}
+              alt=""
+            />
+          </section>
+        </div>
       </section>
 
       <Divider plain>

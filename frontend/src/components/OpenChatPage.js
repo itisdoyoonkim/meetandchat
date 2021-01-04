@@ -18,12 +18,13 @@ function OpenChatPage() {
       const res = await axios.get("/getLinks", {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
-      setOpenChatList(res.data.result.lists);
+      console.log(res.data);
+      setOpenChatList(res.data);
 
       let tagsArray = [];
-      for (let i = 0; i < res.data.result.lists.length; i++) {
+      for (let i = 0; i < res.data.length; i++) {
         tagsArray.push(
-          ...res.data.result.lists[i].tags.map((tag) => {
+          ...res.data[i].tags.map((tag) => {
             return tag;
           })
         );

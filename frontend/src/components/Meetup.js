@@ -51,7 +51,7 @@ function Meetup() {
         <small>
           {post.link ? (
             <>
-              <h4>링크 미리보기를 참고하시고 수상한 링크는 누르지 마세요.</h4>
+              <h4>링크 미리보기를 참고하셔서 수상한 링크로 부터 보호하세요.</h4>
               <WarningOutlined /> 링크 미리보기:{" "}
               {post.link.split("").slice(0, 35)}
               ...

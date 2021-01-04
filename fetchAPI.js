@@ -8,38 +8,26 @@ async function fetchAPI() {
 
   try {
     const res = await axios.get(API);
+    const resPageTwo = await axios.get(
+      "https://api.develope.kr/search/room/list?query=%EB%B2%A4%EC%BF%A0%EB%B2%84&type=m&page=2&count=100"
+    );
 
-    console.log(res.data);
+    const list = [...res.data.result.lists, ...resPageTwo.data.result.lists];
+
+    console.log(list.length);
 
     fs.writeFile(
       path.resolve("./res.json"),
-      JSON.stringify(res.data),
+      JSON.stringify(list),
       function (err) {
         console.log("Error while trying to write file:", err);
       }
     );
     return;
   } catch (error) {
-    console.log("error from server: ", err.message);
-    return err;
+    console.log("error from server: ", error.message);
+    return error;
   }
-
-  // axios(API)
-  //   .then((response) => {
-  //     // console.log(response.data);
-  //     fs.writeFile(
-  //       path.resolve(`./res.json`),
-  //       JSON.stringify(response.data),
-  //       function (err) {
-  //         console.log("error from file writing: ", err);
-  //       }
-  //     );
-  //     return;
-  //   })
-  //   .catch((err) => {
-  //     console.log("error from server: ", err.message);
-  //     return err;
-  //   });
 }
 
 fetchAPI();
