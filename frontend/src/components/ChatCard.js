@@ -45,7 +45,7 @@ function ChatCard({ chat }) {
             <img
               src={chat.pfimg}
               style={{ width: "80px", borderRadius: "99px" }}
-              alt=""
+              alt="kakaotalk profile"
             />
           </section>
         </div>
