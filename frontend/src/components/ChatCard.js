@@ -9,6 +9,9 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 
+import placeholderProfileImg from "../ryan.jpg";
+import placeholderProfileImgTwo from "../siteLogo.png";
+
 function ChatCard({ chat }) {
   // console.log(chat.lastchat);
   // const localTime = new Date(chat.lastchat).getTime();
@@ -44,8 +47,11 @@ function ChatCard({ chat }) {
           <section>
             <img
               src={chat.pfimg}
+              onError={(e) => {
+                e.target.src = placeholderProfileImgTwo;
+              }}
               style={{ width: "80px", borderRadius: "99px" }}
-              alt="kakaotalk profile"
+              alt="kakaotalk open chat profile"
             />
           </section>
         </div>
