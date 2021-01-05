@@ -3,20 +3,29 @@ import React from "react";
 function Header() {
   return (
     <>
-      <h2>
-        <a style={textStyle} href="https://www.vantalk.ca" content="brand-name">
+      <h1>
+        <a
+          style={headingOneStyle}
+          href="https://www.vantalk.ca"
+          content="brand-name"
+        >
           VANTALK
         </a>
-      </h2>
-      <h3 style={textStyle}>
+      </h1>
+      <h2 style={headingTwoStyle}>
         kakaotalk<strong>openchat</strong>: 벤쿠버/밴쿠버
-      </h3>
+      </h2>
     </>
   );
 }
 
-const textStyle = {
+const headingOneStyle = {
   color: "#fefefa",
+};
+
+const headingTwoStyle = {
+  color: "#fefefa",
+  fontSize: "1rem",
 };
 
 export default Header;

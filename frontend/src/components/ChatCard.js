@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Divider, Card, Button } from "antd";
 import {
   HeartFilled,
@@ -9,12 +9,13 @@ import {
   LockOutlined,
 } from "@ant-design/icons";
 
-import placeholderProfileImg from "../ryan.jpg";
 import placeholderProfileImgTwo from "../siteLogo.png";
 
 function ChatCard({ chat }) {
   // console.log(chat.lastchat);
   // const localTime = new Date(chat.lastchat).getTime();
+
+  const [profileImageErrorMessage, setProfileImageErrorMessage] = useState("");
 
   return (
     <Card
@@ -44,15 +45,26 @@ function ChatCard({ chat }) {
               </Button>
             </a>
           </section>
-          <section>
+          <section
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             <img
               src={chat.pfimg}
               onError={(e) => {
                 e.target.src = placeholderProfileImgTwo;
+                setProfileImageErrorMessage("사진을 불러오지 못했습니다.");
               }}
               style={{ width: "80px", borderRadius: "99px" }}
               alt="kakaotalk open chat profile"
             />
+            <br />
+            <small>
+              {profileImageErrorMessage ? profileImageErrorMessage : null}
+            </small>
           </section>
         </div>
       </section>

@@ -42,7 +42,7 @@ router.post(
       min: 1,
       max: 4,
     }),
-    check("link", "오픈 챗 혹은 일대일 챗 링크를 입력 해주세요.")
+    check("link", "오픈 채팅 혹은 일대일 채팅 링크를 입력 해주세요.")
       .not()
       .isEmpty(),
   ],

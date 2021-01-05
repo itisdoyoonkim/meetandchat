@@ -94,17 +94,10 @@ function PostForm(props) {
                 })
               : null}
 
-            <a
-              aria-label="Link to enter chat room"
-              href={link}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <br />
-              <Button>
-                <CommentOutlined /> 입장
-              </Button>
-            </a>
+            <br />
+            <Button>
+              <CommentOutlined /> 입장
+            </Button>
           </section>
           <small>
             <h4>링크 미리보기를 참고하셔서 수상한 링크로 부터 보호하세요.</h4>
@@ -119,6 +112,10 @@ function PostForm(props) {
   return (
     <>
       <Card style={{ marginTop: "10px" }} id="form-card">
+        <h1 style={headingOneStyle}>
+          카카오톡 오픈 채팅을 활용해서 새로운 모임을 시작해보세요.
+        </h1>
+
         <Form
           layout="vertical"
           form={form}
@@ -146,7 +143,7 @@ function PostForm(props) {
               onChange={(e) => handleDescriptionChange(e)}
             />
           </Form.Item>
-          <Form.Item label="오픈 챗 링크" name="link">
+          <Form.Item label="오픈 채팅 링크" name="link">
             <Input
               placeholder={displayError("link")}
               name="link"
@@ -173,5 +170,11 @@ function PostForm(props) {
     </>
   );
 }
+
+const headingOneStyle = {
+  fontSize: ".9rem",
+  marginBottom: "30px",
+  // textAlign: "center",
+};
 
 export default withRouter(PostForm);
