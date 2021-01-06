@@ -56,7 +56,7 @@ function ChatCard({ chat }) {
               src={chat.pfimg}
               onError={(e) => {
                 e.target.src = placeholderProfileImgTwo;
-                setProfileImageErrorMessage("사진을 불러오지 못했습니다.");
+                // setProfileImageErrorMessage("일시적인 문제로 인해 사진을 표시할 수 없습니다.");
               }}
               style={{ width: "80px", borderRadius: "99px" }}
               alt="kakaotalk open chat profile"

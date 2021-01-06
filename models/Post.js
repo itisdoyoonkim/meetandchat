@@ -4,6 +4,7 @@ const PostSchema = new mongoose.Schema({
     type: String,
   },
   description: [],
+  tags: [],
   link: {
     type: String,
   },

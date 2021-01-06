@@ -47,7 +47,8 @@ router.post(
       .isEmpty(),
   ],
   async (req, res) => {
-    const { title, description, link } = req.body;
+    console.log(req.body);
+    const { title, description, link, tags } = req.body;
 
     console.log(req.body);
     const errors = validationResult(req);
@@ -61,6 +62,7 @@ router.post(
         title,
         description,
         link,
+        tags,
       });
 
       const savedPost = await post.save();

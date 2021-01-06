@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Card, Divider, Form, Input, Button } from "antd";
+import { Card, Divider, Form, Input, Button, Col } from "antd";
 import {
   CommentOutlined,
   WarningOutlined,
@@ -13,6 +13,8 @@ function PostForm(props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [link, setLink] = useState("");
+  const [tags, setTags] = useState("");
+  const [totalNumberOfCharacters, setTotalNumberOfCharacters] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
   const [errors, setErrors] = useState([]);
@@ -21,10 +23,16 @@ function PostForm(props) {
     setTitle(e.target.value);
   };
   const handleDescriptionChange = (e) => {
+    // console.log(e.target.value.split(/\r?\n/));
     setDescription(e.target.value.split(/\r?\n/));
+    // limitCharacters(e.target.value.split(/\r?\n/))
   };
   const handleLinkChange = (e) => {
     setLink(e.target.value);
+  };
+  const handleTagsChange = (e) => {
+    console.log(e.target.value.replace(/\s/g, "").split(" "));
+    setTags(e.target.value.replace(/\s/g, "").split(" "));
   };
 
   const handleSubmit = async (e) => {
@@ -33,7 +41,7 @@ function PostForm(props) {
     const config = {
       headers: { "Content-type": "application/json" },
     };
-    const body = JSON.stringify({ title, description, link });
+    const body = JSON.stringify({ title, description, link, tags });
 
     try {
       await axios.post("/meetups", body, config);
@@ -47,8 +55,6 @@ function PostForm(props) {
     }
   };
 
-  const [form] = Form.useForm();
-
   const displayError = (fieldName) => {
     for (let i = 0; i < errors.length; i++) {
       if (errors[i].param === fieldName) {
@@ -57,8 +63,20 @@ function PostForm(props) {
     }
   };
 
+  // const limitCharacters = (description) => {
+  //   console.log(description);
+  //   let characters = 0;
+  //   for (let i = 0; i < description.length; i++) {
+  //     // characters = characters + i.length;
+  //     characters = characters + description[i].length;
+  //   }
+  //   console.log(`total of ${characters}`);
+  //   setTotalNumberOfCharacters(characters);
+  // };
+
+  const [form] = Form.useForm();
+
   useEffect(() => {
-    console.log("toggle preview");
     const el = document.getElementById("form-card");
     window.scrollTo({
       top: el.offsetHeight,
@@ -125,6 +143,13 @@ function PostForm(props) {
           onFinish={handleSubmit}
           onFinishFailed={() => console.log("failed")}
         >
+          <Form.Item label="태그를 입력해 주세요 (최대 3개)">
+            <Input
+              placeholder="#술, #토요일, #다운타운"
+              onChange={(e) => handleTagsChange(e)}
+            />
+          </Form.Item>
+
           <Form.Item label="제목" name="title">
             <Input
               placeholder={displayError("title")}
@@ -136,6 +161,7 @@ function PostForm(props) {
           </Form.Item>
           <Form.Item label="내용 (1-100자)" name="description">
             <Input.TextArea
+              maxLength="100"
               rows={3}
               placeholder={displayError("description")}
               name="description"
