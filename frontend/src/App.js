@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import ReactGA from "react-ga";
 import { Affix } from "antd";
 
@@ -7,7 +7,7 @@ import Header from "./components/Header";
 // import FilterBar from "./components/FilterBar";
 import MenuBar from "./components/MenuBar";
 import OpenChatPage from "./components/OpenChatPage";
-import Meetup from "./components/Meetup";
+import MeetupPage from "./components/MeetupPage";
 import NewMeetup from "./components/NewMeetup";
 
 import "./App.css";
@@ -28,8 +28,9 @@ function App(props) {
 
         <Switch>
           <Route exact path="/" component={OpenChatPage} />
-          <Route exact path="/meetup" component={Meetup} />
+          <Route exact path="/meetup" component={MeetupPage} />
           <Route exact path="/meetup/new" component={NewMeetup} />
+          <Redirect to="/" />
         </Switch>
       </div>
     </BrowserRouter>

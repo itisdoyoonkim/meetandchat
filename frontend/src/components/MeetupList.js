@@ -1,27 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Button, Divider } from "antd";
+import React from "react";
+import { Row, Card, Col, Tag, Divider, Button } from "antd";
 import { CommentOutlined, WarningOutlined } from "@ant-design/icons";
 
-import axios from "axios";
-
-function Meetup() {
-  const [posts, setPosts] = useState([]);
-
-  useEffect(() => {
-    async function fetchPosts() {
-      const res = await axios.get("/meetups", {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      });
-
-      setPosts(res.data);
-    }
-    fetchPosts();
-    return () => {};
-  }, []);
-
-  // console.log(new Date("2020-12-28T06:30:09.743Z"));
-  // console.log(posts);
-
+function MeetupList({ list }) {
   const changeDateFormat = (date) => {
     const localDateTime = new Date(date).toLocaleString("ko-KR");
     return `${localDateTime}`;
@@ -67,8 +48,8 @@ function Meetup() {
   return (
     <div>
       <Row gutter={16}>
-        {posts
-          ? posts.map((post) => {
+        {list
+          ? list.map((post) => {
               return (
                 <Col
                   key={post._id}
@@ -88,6 +69,13 @@ function Meetup() {
                   >
                     <section>
                       <h4>{post.title}</h4>
+                      <div>
+                        {post.tags
+                          ? post.tags.map((tag) => {
+                              return <Tag>#{tag} </Tag>;
+                            })
+                          : null}
+                      </div>
                     </section>
 
                     <Divider />
@@ -110,4 +98,4 @@ const textStyle = {
   overflowWrap: "break-word" /* CSS3 */,
 };
 
-export default Meetup;
+export default MeetupList;

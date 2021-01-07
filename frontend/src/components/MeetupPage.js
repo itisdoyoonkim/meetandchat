@@ -1,26 +1,24 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Affix, Button } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Affix } from "antd";
 import { BarsOutlined } from "@ant-design/icons";
 
 import FilterBar from "./FilterBar";
-import ChatCardList from "./ChatCardList";
+import MeetupList from "./MeetupList";
 
-import muzi from "../muzi.png";
+import axios from "axios";
 
-import "../App.css";
-
-function OpenChatPage() {
-  const [openChatList, setOpenChatList] = useState([]);
+function Meetup() {
+  const [posts, setPosts] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
 
   useEffect(() => {
-    async function fetchOpenChatList() {
-      const res = await axios.get("/getLinks", {
+    async function fetchPosts() {
+      const res = await axios.get("/meetups", {
         headers: { "Access-Control-Allow-Origin": "*" },
       });
-      setOpenChatList(res.data);
+
+      setPosts(res.data);
 
       let tagsArray = [];
       for (let i = 0; i < res.data.length; i++) {
@@ -30,12 +28,13 @@ function OpenChatPage() {
           })
         );
       }
+
       let duplicateRemovedTagsArray = [...new Set(tagsArray)];
 
       setTags([...tags, duplicateRemovedTagsArray]);
     }
+    fetchPosts();
 
-    fetchOpenChatList();
     return () => {};
   }, []);
 
@@ -49,21 +48,8 @@ function OpenChatPage() {
     return setSelectedTag("");
   }
 
-  const LoadingImage = () => {
-    return (
-      <div style={{ textAlign: "center", padding: "50px" }}>
-        <img
-          id="loading"
-          src={muzi}
-          style={{ width: "100px", borderRadius: "999px" }}
-          alt="ryan"
-        />
-      </div>
-    );
-  };
-
   return (
-    <>
+    <div>
       {selectedTag ? (
         <Button
           onClick={resetFilter}
@@ -73,22 +59,17 @@ function OpenChatPage() {
           리스트 리셋
         </Button>
       ) : null}
+
       <Affix offsetTop={45}>
         <FilterBar
-          selectedTagValue={selectedTag}
           tags={tags}
+          selectedTagValue={selectedTag}
           filterList={(tag) => setSelectedTag(tag)}
         />
       </Affix>
-      {openChatList.length > 0 ? (
-        <ChatCardList
-          list={selectedTag ? handleFilter(openChatList) : openChatList}
-        />
-      ) : (
-        <LoadingImage />
-      )}
-    </>
+      <MeetupList list={selectedTag ? handleFilter(posts) : posts} />
+    </div>
   );
 }
 
-export default OpenChatPage;
+export default Meetup;

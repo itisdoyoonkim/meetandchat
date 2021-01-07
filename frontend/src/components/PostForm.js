@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Card, Divider, Form, Input, Button, Col } from "antd";
+import { Card, Divider, Form, Input, Button, Col, Tag } from "antd";
 import {
   CommentOutlined,
   WarningOutlined,
@@ -16,6 +16,7 @@ function PostForm(props) {
   const [tags, setTags] = useState("");
   const [totalNumberOfCharacters, setTotalNumberOfCharacters] = useState("");
   const [showPreview, setShowPreview] = useState(false);
+  const [tagError, setTagError] = useState("");
 
   const [errors, setErrors] = useState([]);
 
@@ -23,20 +24,20 @@ function PostForm(props) {
     setTitle(e.target.value);
   };
   const handleDescriptionChange = (e) => {
-    // console.log(e.target.value.split(/\r?\n/));
     setDescription(e.target.value.split(/\r?\n/));
-    // limitCharacters(e.target.value.split(/\r?\n/))
   };
   const handleLinkChange = (e) => {
     setLink(e.target.value);
   };
   const handleTagsChange = (e) => {
-    console.log(e.target.value.replace(/\s/g, "").split(" "));
-    setTags(e.target.value.replace(/\s/g, "").split(" "));
+    setTags(e.target.value.replace(/\s/g, "").split(","));
   };
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
+    if (tags.length > 3) {
+      setTagError("태그의 갯수를 확인해주세요.");
+    }
 
     const config = {
       headers: { "Content-type": "application/json" },
@@ -51,7 +52,6 @@ function PostForm(props) {
       setTimeout(() => {
         setErrors([]);
       }, 3000);
-      console.log(error.response.data.errors);
     }
   };
 
@@ -62,17 +62,6 @@ function PostForm(props) {
       }
     }
   };
-
-  // const limitCharacters = (description) => {
-  //   console.log(description);
-  //   let characters = 0;
-  //   for (let i = 0; i < description.length; i++) {
-  //     // characters = characters + i.length;
-  //     characters = characters + description[i].length;
-  //   }
-  //   console.log(`total of ${characters}`);
-  //   setTotalNumberOfCharacters(characters);
-  // };
 
   const [form] = Form.useForm();
 
@@ -99,6 +88,13 @@ function PostForm(props) {
         >
           <section>
             <h4>{title}</h4>
+            <div>
+              {tags
+                ? tags.map((tag) => {
+                    return <Tag>#{tag} </Tag>;
+                  })
+                : null}
+            </div>
           </section>
 
           <Divider />
@@ -143,9 +139,11 @@ function PostForm(props) {
           onFinish={handleSubmit}
           onFinishFailed={() => console.log("failed")}
         >
+          {tagError ? <small>{tagError}</small> : null}
+
           <Form.Item label="태그를 입력해 주세요 (최대 3개)">
             <Input
-              placeholder="#술, #토요일, #다운타운"
+              placeholder="예) 술, 다운타운, 금요일"
               onChange={(e) => handleTagsChange(e)}
             />
           </Form.Item>

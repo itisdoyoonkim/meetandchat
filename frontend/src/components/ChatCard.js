@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Divider, Card, Button } from "antd";
+import React from "react";
+import { Divider, Card, Button, Tag } from "antd";
 import {
   HeartFilled,
-  HeartOutlined,
   TeamOutlined,
   TagsOutlined,
   CommentOutlined,
@@ -12,11 +11,6 @@ import {
 import placeholderProfileImgTwo from "../siteLogo.png";
 
 function ChatCard({ chat }) {
-  // console.log(chat.lastchat);
-  // const localTime = new Date(chat.lastchat).getTime();
-
-  const [profileImageErrorMessage, setProfileImageErrorMessage] = useState("");
-
   return (
     <Card
       bordered={false}
@@ -56,15 +50,11 @@ function ChatCard({ chat }) {
               src={chat.pfimg}
               onError={(e) => {
                 e.target.src = placeholderProfileImgTwo;
-                // setProfileImageErrorMessage("일시적인 문제로 인해 사진을 표시할 수 없습니다.");
               }}
               style={{ width: "80px", borderRadius: "99px" }}
               alt="kakaotalk open chat profile"
             />
             <br />
-            <small>
-              {profileImageErrorMessage ? profileImageErrorMessage : null}
-            </small>
           </section>
         </div>
       </section>
@@ -79,13 +69,8 @@ function ChatCard({ chat }) {
       <section>
         <TagsOutlined />{" "}
         {chat.tags.map((tag) => {
-          return <span key={tag + Math.random()}>{tag} </span>;
+          return <Tag key={tag + Math.random()}>{tag} </Tag>;
         })}
-      </section>
-
-      <section>
-        {/* Add 7 hours to display Vancouver time */}
-        {/* <small>최근 메세지: {chat.lastchat}</small> */}
       </section>
     </Card>
   );

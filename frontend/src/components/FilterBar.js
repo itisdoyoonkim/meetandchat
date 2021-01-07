@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Select, Button } from "antd";
+import React from "react";
+import { Select } from "antd";
 import { TagsOutlined } from "@ant-design/icons";
 
 function FilterBar({ tags, filterList, selectedTagValue }) {
