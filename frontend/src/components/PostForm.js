@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
-import { Card, Divider, Form, Input, Button, Col, Tag } from "antd";
+import { Card, Divider, Form, Input, Button, Col, Tag, Alert } from "antd";
 import {
   CommentOutlined,
   WarningOutlined,
@@ -30,15 +30,25 @@ function PostForm(props) {
     setLink(e.target.value);
   };
   const handleTagsChange = (e) => {
-    setTags(e.target.value.replace(/\s/g, "").split(","));
+    let tagsArr = e.target.value.replace(/\s/g, "").split(",");
+
+    let newTagsArr = tagsArr.filter((tag) => {
+      return tag !== "";
+    });
+
+    setTags(newTagsArr);
   };
 
   const handleSubmit = async (e) => {
+    console.log(tags);
     // e.preventDefault();
-    if (tags.length > 3) {
-      setTagError("태그의 갯수를 확인해주세요.");
+    if (tags.length > 5 || tags.length < 3) {
+      console.log(tags);
+      setTagError("2~5개의 태그를 입력해 주세요.");
+      return;
     }
 
+    setTagError("");
     const config = {
       headers: { "Content-type": "application/json" },
     };
@@ -103,7 +113,12 @@ function PostForm(props) {
             {description
               ? description.map((sentence) => {
                   return (
-                    <p style={{ overflowWrap: "break-word" }}>{sentence}</p>
+                    <p
+                      key={description.indexOf(sentence)}
+                      style={{ overflowWrap: "break-word" }}
+                    >
+                      {sentence}
+                    </p>
                   );
                 })
               : null}
@@ -139,19 +154,21 @@ function PostForm(props) {
           onFinish={handleSubmit}
           onFinishFailed={() => console.log("failed")}
         >
-          {tagError ? <small>{tagError}</small> : null}
-
-          <Form.Item label="태그를 입력해 주세요 (최대 3개)">
+          {tagError ? (
+            <Alert message={tagError} type="warning" showIcon closable />
+          ) : null}
+          <br />
+          <Form.Item label="태그를 입력해 주세요 (2~5개)">
             <Input
               placeholder="예) 술, 다운타운, 금요일"
               onChange={(e) => handleTagsChange(e)}
+              autoFocus
             />
           </Form.Item>
 
           <Form.Item label="제목" name="title">
             <Input
               placeholder={displayError("title")}
-              autoFocus
               name="title"
               value={title}
               onChange={(e) => handleTitleChange(e)}

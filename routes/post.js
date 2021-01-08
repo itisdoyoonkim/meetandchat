@@ -45,7 +45,10 @@ router.post(
     check("link", "오픈 채팅 혹은 일대일 채팅 링크를 입력 해주세요.")
       .not()
       .isEmpty(),
-    check("tags", "태그를 입력해 주세요 (최대 3개).").isArray({ max: 3 }),
+    check("tags", "태그를 입력해 주세요 (최대 3개).").isArray({
+      max: 5,
+      min: 2,
+    }),
   ],
   async (req, res) => {
     console.log(req.body);

@@ -12,7 +12,11 @@ function MeetupList({ list }) {
     return (
       <>
         {post.description.map((sentence) => {
-          return <p style={textStyle}>{sentence}</p>;
+          return (
+            <p key={post.description.indexOf(sentence)} style={textStyle}>
+              {sentence}
+            </p>
+          );
         })}
         <section>
           <a
