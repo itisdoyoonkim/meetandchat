@@ -44,7 +44,7 @@ function PostForm(props) {
     // e.preventDefault();
     if (tags.length > 5 || tags.length < 3) {
       console.log(tags);
-      setTagError("2~5개의 태그를 입력해 주세요.");
+      setTagError("3~5개의 태그를 입력해 주세요.");
       return;
     }
 
@@ -158,7 +158,7 @@ function PostForm(props) {
             <Alert message={tagError} type="warning" showIcon closable />
           ) : null}
           <br />
-          <Form.Item label="태그를 입력해 주세요 (2~5개)">
+          <Form.Item label="태그를 입력해 주세요 (3~5개)">
             <Input
               placeholder="예) 술, 다운타운, 금요일"
               onChange={(e) => handleTagsChange(e)}
